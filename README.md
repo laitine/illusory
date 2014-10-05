@@ -1,11 +1,18 @@
 illusory
 ========
 
-Visualization script.
+Sound controlled visualization.
+
+Roadmap
+=======
+
+* Sound parameters
+
+* Visualization parameters
 
 More
 ====
 
-Processing.js
+[Processing.js](http://processingjs.org)
 
-http://processingjs.org/
+[Web Audio API](http://webaudio.github.io/web-audio-api)
