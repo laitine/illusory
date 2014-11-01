@@ -21,7 +21,7 @@ void setup() {
   background(#2980b9);
   frameRate(75);
 
-  //loadPixels();
+  loadPixels();
 
   // Get audio input
   if (navigator.getUserMedia) {
@@ -71,12 +71,12 @@ void draw() {
       sites[i] = new PVector(random(width), random(width));
   }
 
-  float minDistance = screen.width;
   for (int x = 0; x < width; x++)
   {
       for (int y = 0; y < height; y++)
       {
           int closestIndex = 0;
+          float minDistance = screen.width;
 
           for (int i = 0; i < numSites; i++)
           {
@@ -87,12 +87,12 @@ void draw() {
                   minDistance = distance;
               }
           }
-          set(x, y, colors[closestIndex]);
-          //pixels[x + *] = colors[closestIndex];
+          //set(x, y, colors[closestIndex]);
+          pixels[x + (y * width)] = colors[closestIndex];
       }
   }
 
-  //updatePixels();
+  updatePixels();
 
   /*
   // Draw polygon center
