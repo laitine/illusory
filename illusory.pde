@@ -1,5 +1,4 @@
 boolean manhattan = true; // Set false for euclid
-colorMode(HSB, 325);
 
 // Setup audio input
 navigator.getUserMedia = (navigator.getUserMedia ||
@@ -12,9 +11,8 @@ var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 // Setup audio analyser
 var analyser = audioCtx.createAnalyser();
-analyser.fftSize = 2048;
+analyser.fftSize = 1024;
 var bufferLength = analyser.frequencyBinCount;
-var waveformArray = new Uint8Array(bufferLength);
 var frequencyArray = new Uint8Array(bufferLength);
 
 void setup() {
@@ -51,21 +49,18 @@ void setup() {
 
 void draw() {
   // Reset canvas
-  background(#2c3e50);
-
-  // Get waveform data
-  analyser.getByteTimeDomainData(waveformArray);
-
-  // Get volume
-  var volume = getVolume(waveformArray);
+  //background(#2c3e50);
 
   // Get frequency data
   analyser.getByteFrequencyData(frequencyArray);
 
+  // Get volume
+  var volume = getVolume(frequencyArray);
+
   // Get Frequency bands
   var bands = getActiveFrequencyBands(frequencyArray);
 
-  console.log(volume + " " + bands);
+  console.log("volume: " + volume + " freqBands: " + bands);
 
   // Draw manhattan diagram
   int numSites = volume;
@@ -73,7 +68,7 @@ void draw() {
   color[] colors = new color[numSites];
 
   for (int i = 0; i < numSites; i++) {
-      colors[i] = color(random(bands, 325), 60, 100);
+      colors[i] = color(random(bands, 255), random(bands, 255), random(bands, 255));
       sites[i] = new PVector(random(width), random(width));
   }
 
@@ -109,7 +104,7 @@ void resize(float x, float y) {
 }
 
 function getVolume(array) {
-  float volume = 0;
+  int volume = 0;
   int values = 0;
   int length = array.length;
 
@@ -117,10 +112,9 @@ function getVolume(array) {
     //console.log("volume: " + array[i]);
     values += array[i];
   }
-  volume = 130 - (values / length);
-  volume *= 100;
+  volume = 129 - values / length;
 
-  return int(volume);
+  return volume;
 }
 
 function getActiveFrequencyBands(array) {
