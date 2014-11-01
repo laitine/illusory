@@ -1,4 +1,5 @@
 boolean manhattan = true; // Set false for euclid
+colorMode(HSB, 325);
 
 // Setup audio input
 navigator.getUserMedia = (navigator.getUserMedia ||
@@ -72,7 +73,7 @@ void draw() {
   color[] colors = new color[numSites];
 
   for (int i = 0; i < numSites; i++) {
-      colors[i] = color(random(bands), 60, 100);
+      colors[i] = color(random(bands, 325), 60, 100);
       sites[i] = new PVector(random(width), random(width));
   }
 
@@ -96,9 +97,11 @@ void draw() {
       }
   }
 
+  /*
+  // Draw polygon center
   for (int i = 0; i < numSites; i++) {
       ellipse(sites[i].x, sites[i].y, 5, 5);
-  }
+  }*/
 }
 
 void resize(float x, float y) {
