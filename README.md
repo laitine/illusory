@@ -1,14 +1,7 @@
 illusory
 ========
 
-Sound controlled visualization.
-
-Roadmap
-=======
-
-* Sound parameters
-
-* Visualization parameters
+Sound controlled visualization based on Voronoi diagram.
 
 More
 ====
