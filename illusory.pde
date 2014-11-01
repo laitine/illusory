@@ -11,15 +11,17 @@ var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 // Setup audio analyser
 var analyser = audioCtx.createAnalyser();
-analyser.fftSize = 1024;
+analyser.fftSize = 32; //1024;
 var bufferLength = analyser.frequencyBinCount;
 var frequencyArray = new Uint8Array(bufferLength);
 
 void setup() {
   size(screen.width, screen.height);
   smooth();
-  background(#2c3e50);
-  //frameRate(75);
+  background(#2980b9);
+  frameRate(75);
+
+  //loadPixels();
 
   // Get audio input
   if (navigator.getUserMedia) {
@@ -48,9 +50,6 @@ void setup() {
 }
 
 void draw() {
-  // Reset canvas
-  //background(#2c3e50);
-
   // Get frequency data
   analyser.getByteFrequencyData(frequencyArray);
 
@@ -72,11 +71,11 @@ void draw() {
       sites[i] = new PVector(random(width), random(width));
   }
 
+  float minDistance = screen.width;
   for (int x = 0; x < width; x++)
   {
       for (int y = 0; y < height; y++)
       {
-          float minDistance = screen.width;
           int closestIndex = 0;
 
           for (int i = 0; i < numSites; i++)
@@ -89,14 +88,18 @@ void draw() {
               }
           }
           set(x, y, colors[closestIndex]);
+          //pixels[x + *] = colors[closestIndex];
       }
   }
+
+  //updatePixels();
 
   /*
   // Draw polygon center
   for (int i = 0; i < numSites; i++) {
       ellipse(sites[i].x, sites[i].y, 5, 5);
-  }*/
+  }
+  */
 }
 
 void resize(float x, float y) {
@@ -114,7 +117,7 @@ function getVolume(array) {
   }
   volume = 129 - values / length;
 
-  return volume;
+  return int(volume);
 }
 
 function getActiveFrequencyBands(array) {
