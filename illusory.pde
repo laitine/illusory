@@ -1,4 +1,4 @@
-boolean manhattan = false; // Set false for euclid
+boolean manhattan = true; // Set false for euclid
 
 // Setup audio input
 navigator.getUserMedia = (navigator.getUserMedia ||
