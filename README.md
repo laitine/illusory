@@ -8,7 +8,7 @@ Sound controlled Voronoi diagram visualization. Includes manhattan and euclidean
 Use
 ---
 
-For manhattan mode add URL parameter ´manhattan´ and for eclidean mode ´euclid´. The default mode is manhattan.
+For manhattan mode add URL parameter `manhattan` and for euclidean mode `euclid`. The default mode is manhattan.
 
 More
 ----
