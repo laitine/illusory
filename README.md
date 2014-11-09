@@ -3,7 +3,7 @@ illusory
 
 ![illusory](https://raw.githubusercontent.com/laitine/illusory/master/favicon.png)
 
-Sound controlled visualization based on Voronoi diagram.
+Sound controlled Voronoi diagram visualization. Includes manhattan and euclidean modes.
 
 More
 ----

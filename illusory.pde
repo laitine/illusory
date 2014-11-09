@@ -1,4 +1,14 @@
-boolean manhattan = true; // Set false for euclid
+boolean mode = true; // true for manhattan and false for euclid
+
+// Set mode from URL parameter
+var param = window.location.search.substring(1);
+if (param == "manhattan") {
+  mode = true;
+}
+
+if (param == "euclid") {
+  mode = false;
+}
 
 // Setup audio input
 navigator.getUserMedia = (navigator.getUserMedia ||
@@ -61,7 +71,7 @@ void draw() {
 
   console.log("volume: " + volume + " freqBands: " + bands);
 
-  // Draw manhattan diagram
+  // Draw Voronoi diagram
   int numSites = volume;
   PVector[] sites = new PVector[numSites];
   color[] colors = new color[numSites];
@@ -80,7 +90,7 @@ void draw() {
 
           for (int i = 0; i < numSites; i++)
           {
-              float distance = manhattan ? abs(sites[i].x - x) + abs(sites[i].y - y) : dist(x, y, sites[i].x, sites[i].y);
+              float distance = mode ? abs(sites[i].x - x) + abs(sites[i].y - y) : dist(x, y, sites[i].x, sites[i].y);
 
               if (distance < minDistance) {
                   closestIndex = i;
