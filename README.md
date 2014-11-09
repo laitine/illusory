@@ -5,6 +5,11 @@ illusory
 
 Sound controlled Voronoi diagram visualization. Includes manhattan and euclidean modes.
 
+Use
+---
+
+For manhattan mode add URL parameter ´manhattan´ and for eclidean mode ´euclid´. The default mode is manhattan.
+
 More
 ----
 
