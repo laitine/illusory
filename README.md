@@ -10,6 +10,11 @@ Use
 
 For manhattan mode add URL parameter `manhattan` and for euclidean mode `euclid`. The default mode is manhattan.
 
+Roadmap
+-------
+
+* Selectable color themes
+
 More
 ----
 
