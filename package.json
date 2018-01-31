@@ -16,7 +16,10 @@
   },
   "homepage": "https://github.com/laitine/illusory",
   "devDependencies": {
-    "browser-sync": "^1.5.1",
-    "gulp": "^3.8.8"
+    "browser-sync": "2.23.6",
+    "gulp": "3.9.1"
+  },
+  "scripts": {
+    "start": "gulp"
   }
 }
