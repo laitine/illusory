@@ -10,6 +10,32 @@ Use
 
 For manhattan mode add URL parameter `manhattan` and for euclidean mode `euclid`. The default mode is manhattan.
 
+Develop
+-------
+
+### Prerequirements
+* [Node.js](https://nodejs.org)
+
+1. Install dependencies
+
+```
+npm install
+```
+
+2. Run dev environment
+
+```
+npm run start
+```
+
+3. Run build
+
+```
+npm run build
+```
+
+4. Deploy to production at https://illusory-89aff.firebaseapp.com.
+
 Roadmap
 -------
 
