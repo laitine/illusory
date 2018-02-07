@@ -1,11 +1,10 @@
 // Set mode
-boolean mode = true; // true for manhattan and false for euclid
+var mode = true; // true for manhattan and false for euclid
 var param = window.location.search.substring(1);
+
 if (param == "manhattan") {
   mode = true;
-}
-
-if (param == "euclid") {
+} else if (param == "euclid") {
   mode = false;
 }
 
@@ -24,12 +23,11 @@ analyser.fftSize = 32;
 var bufferLength = analyser.frequencyBinCount;
 var frequencyArray = new Uint8Array(bufferLength);
 
-void setup() {
-  size(screen.width, screen.height);
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background('#2980b9');
   smooth();
-  background(#2980b9);
   frameRate(60);
-  loadPixels();
 
   // Get audio input
   if (navigator.getUserMedia) {
@@ -56,7 +54,9 @@ void setup() {
   }
 }
 
-void draw() {
+function draw() {
+  loadPixels();
+
   // Get frequency data
   analyser.getByteFrequencyData(frequencyArray);
 
@@ -68,28 +68,30 @@ void draw() {
   bands = 255 / bufferLength * bands;
   bands = 255 - int(bands);
 
-  //console.log("volume: " + volume + " freqBands: " + bands);
-
   // Draw Voronoi diagram
-  int numSites = volume;
-  PVector[] sites = new PVector[numSites];
-  color[] colors = new color[numSites];
+  var numSites = volume;
+  var sites = new Array(numSites);
+  var colors = new Array(numSites);
 
-  for (int i = 0; i < numSites; i++) {
+  for (var i = 0; i < numSites; i++) {
     colors[i] = color(random(bands, 255), random(bands, 255), random(bands, 255));
-    sites[i] = new PVector(random(width), random(width));
+    sites[i] = createVector(random(width), random(width));
   }
 
-  for (int x = 0; x < width; x++)
-  {
-      for (int y = 0; y < height; y++)
-      {
-          int closestIndex = 0;
-          float minDistance = screen.width;
+  //console.log(sites);
+  //console.log(colors[i]);
+  //console.log(sites);
 
-          for (int i = 0; i < numSites; i++)
+  for (var x = 0; x < width; x++)
+  {
+      for (var y = 0; y < height; y++)
+      {
+          var closestIndex = 0;
+          var minDistance = windowWidth;
+
+          for (var i = 0; i < numSites; i++)
           {
-              float distance = mode ? abs(sites[i].x - x) + abs(sites[i].y - y) : dist(x, y, sites[i].x, sites[i].y);
+              var distance = mode ? abs(sites[i].x - x) + abs(sites[i].y - y) : dist(x, y, sites[i].x, sites[i].y);
 
               if (distance < minDistance) {
                   closestIndex = i;
@@ -99,18 +101,17 @@ void draw() {
           pixels[x + (y * width)] = colors[closestIndex];
       }
   }
-
   updatePixels();
 }
 
-void resize(float x, float y) {
-  size(x,y);
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
 }
 
 function getVolume(array) {
-  int vol = 0;
-  int values = 0;
-  int length = array.length;
+  var vol = 0;
+  var values = 0;
+  var length = array.length;
 
   for (var i = 0; i < length; i++) {
     values += array[i];
@@ -121,11 +122,11 @@ function getVolume(array) {
 }
 
 function getActiveFrequencyBands(array) {
-  int bands = 0;
-  int threshold = 10;
+  var bands = 0;
+  var threshold = 10;
   length = array.length;
 
-  for (int i = 0; i < length; i++) {
+  for (var i = 0; i < length; i++) {
     if (array[i] > threshold) {
       bands++;
     }

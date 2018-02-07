@@ -1,6 +1,9 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync');
 var csso = require('gulp-csso');
+var uglify = require('gulp-uglify');
+var pump = require('pump');
+var imagemin = require('gulp-imagemin');
 
 gulp.task('default', ['build'], function() {
   browserSync({
@@ -11,20 +14,23 @@ gulp.task('default', ['build'], function() {
 
   gulp.watch('./src/img/*.png', ['img', browserSync.reload]);
   gulp.watch('./src/*.html', ['html', browserSync.reload]);
-  gulp.watch('./src/js/*.pde', ['js', browserSync.reload]);
+  gulp.watch('./src/js/*.js', ['js', browserSync.reload]);
   gulp.watch('./src/css/*.css', ['css', browserSync.reload]);
 
   console.log("Local illusory running at http://localhost:3000");
 });
 
-gulp.task('processingjs', function() {
-  return gulp.src('./node_modules/processing-js/processing.min.js')
+gulp.task('js:vendor', function() {
+  return gulp.src('./node_modules/p5/lib/p5.min.js')
     .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('js', ['processingjs'], function() {
-  return gulp.src('./src/js/*.pde')
-    .pipe(gulp.dest('./dist'));
+gulp.task('js', ['js:vendor'], function(cb) {
+  pump([
+    gulp.src('./src/js/*.js'),
+    uglify(),
+    gulp.dest('./dist'),
+  ], cb);
 });
 
 gulp.task('css', function() {
@@ -40,6 +46,7 @@ gulp.task('html', function() {
 
 gulp.task('img', function() {
   return gulp.src('./src/img/*.png')
+    .pipe(imagemin())
     .pipe(gulp.dest('./dist'));
 });
 
