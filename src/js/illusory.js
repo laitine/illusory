@@ -80,8 +80,8 @@ function draw() {
   var density = pixelDensity();
 
   if (colors.length !== 0) {
-    for (var x = 0; x < windowWidth; x += 4) {
-      for (var y = 0; y < windowHeight; y += 4) {
+    for (var x = 0; x < windowWidth; x++) {
+      for (var y = 0; y < windowHeight; y++) {
         var closestIndex = 0;
         var minDistance = windowWidth;
 
