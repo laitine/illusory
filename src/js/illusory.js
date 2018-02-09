@@ -80,8 +80,8 @@ function draw() {
   var density = pixelDensity();
 
   if (colors.length !== 0) {
-    for (var x = 0; x < width; x++) {
-      for (var y = 0; y < height; y++) {
+    for (var x = 0; x < windowWidth; x += 4) {
+      for (var y = 0; y < windowHeight; y += 4) {
         var closestIndex = 0;
         var minDistance = windowWidth;
 
@@ -93,10 +93,16 @@ function draw() {
             minDistance = distance;
           }
         }
-        pixels[x + (y * (width * density))] = red(colors[closestIndex]);
-        pixels[x + (y * (width * density))+1] = green(colors[closestIndex]);
-        pixels[x + (y * (width * density))+2] = blue(colors[closestIndex]);
-        pixels[x + (y * (width * density))+3] = alpha(colors[closestIndex]);
+
+        for (var i = 0; i < density; i++) {
+          for (var j = 0; j < density; j++) {
+            var indx = 4 * ((y * density + j) * width * density + (x * density + i));
+            pixels[indx] = red(colors[closestIndex]);
+            pixels[indx + 1] = green(colors[closestIndex]);
+            pixels[indx + 2] = blue(colors[closestIndex]);
+            pixels[indx + 3] = alpha(colors[closestIndex]);
+          }
+        }
       }
     }
   }
