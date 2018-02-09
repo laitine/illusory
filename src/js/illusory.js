@@ -55,8 +55,6 @@ function setup() {
 }
 
 function draw() {
-  loadPixels();
-
   // Get frequency data
   analyser.getByteFrequencyData(frequencyArray);
 
@@ -75,32 +73,34 @@ function draw() {
 
   for (var i = 0; i < numSites; i++) {
     colors[i] = color(random(bands, 255), random(bands, 255), random(bands, 255));
-    sites[i] = createVector(random(width), random(width));
+    sites[i] = createVector(random(width), random(height));
   }
 
-  //console.log(sites);
-  //console.log(colors[i]);
-  //console.log(sites);
+  loadPixels();
+  var density = pixelDensity();
 
-  for (var x = 0; x < width; x++)
-  {
-      for (var y = 0; y < height; y++)
-      {
-          var closestIndex = 0;
-          var minDistance = windowWidth;
+  if (colors.length !== 0) {
+    for (var x = 0; x < width; x++) {
+      for (var y = 0; y < height; y++) {
+        var closestIndex = 0;
+        var minDistance = windowWidth;
 
-          for (var i = 0; i < numSites; i++)
-          {
-              var distance = mode ? abs(sites[i].x - x) + abs(sites[i].y - y) : dist(x, y, sites[i].x, sites[i].y);
+        for (var i = 0; i < numSites; i++) {
+          var distance = mode ? abs(sites[i].x - x) + abs(sites[i].y - y) : dist(x, y, sites[i].x, sites[i].y);
 
-              if (distance < minDistance) {
-                  closestIndex = i;
-                  minDistance = distance;
-              }
+          if (distance < minDistance) {
+            closestIndex = i;
+            minDistance = distance;
           }
-          pixels[x + (y * width)] = colors[closestIndex];
+        }
+        pixels[x + (y * (width * density))] = red(colors[closestIndex]);
+        pixels[x + (y * (width * density))+1] = green(colors[closestIndex]);
+        pixels[x + (y * (width * density))+2] = blue(colors[closestIndex]);
+        pixels[x + (y * (width * density))+3] = alpha(colors[closestIndex]);
       }
+    }
   }
+
   updatePixels();
 }
 
